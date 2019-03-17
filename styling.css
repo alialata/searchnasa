@@ -87,7 +87,7 @@ input[type="text"], input[type="number"], textarea, numberarea {
 }
 ::placeholder {
   color: white;
-  opacity: 0.8; 
+  opacity: 0.9; 
 }
 
 a.button1{
