@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!-- Demonstrates programmatic changes to style -->
+
+<html lang="en">
+	<style>
+	</style>
+	
+    <head>
+        <title>NASA</title>
+		<link rel="shortcut icon" href="favicon.ico.png" type="image/x-icon">
+		<link rel="stylesheet" type="text/css" href="styling.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+		<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+		<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
+		<script src="functions.js"></script>
+    </head>
+
+    <body>
+			<header>
+					<table cellspacing="50" style="margin-left:5%">
+					<tr>
+					<td width="20%" align="center" valign="center">
+					<a href="NASA.html"><img src="nasalogo.png" width=200px id class="center" /></a>
+					<h2 style="color: white; text-align: center;">NASA SEARCH</h2>
+					</td>
+					<td width="80%" align:"center" valign="center">
+					<form onsubmit="findImages()">
+						<input type="text"  style="width: 80%;margin-bottom: 5px;" id="search_submit" class="" placeholder="what are you looking for?">
+
+						<div id="myDIV" style = "display: none;">
+							<input type="text" class="advanced" id="location" placeholder="Location">
+							<input type="text" class="advanced" id="center" placeholder="Center">
+							<input type="text" class="advanced" id="nasa_id" placeholder="NASA ID"><br>
+							<input type="text" class="advanced" id="photographer" placeholder="Photographer">
+							<input type="number" min="1920" max="2019"  class="advanced" id="yearStart" value=1920 placeholder="Year Start">
+							<input type="number" min="1920" max="2019"  class="advanced" id="yearEnd" value=2019 placeholder="Year End">
+						</div>
+						<br>
+						<br>
+						<input type="submit" hidden>
+						<a class="button1" type="button" onclick="findImages();">Search</a>
+						<a class="button1" type="button" id="adv_button" onclick="func1();func2();">Advanced</a><br>
+					</form>
+					</td>
+					</tr>
+					</table>
+			</header>
+
+			<div id="resultInfo" style="margin-left: 3%">
+			</div>
+			<div id="loader" style="display: none; text-align: center;">
+				<br>
+				<br>
+				<img src="loader.gif">
+			</div>
+			<div class="grid" id="images"></div>
+				<br>
+				<br>
+			<div id="navDiv" style="text-align: center;">
+			</div>
+    </body>
+</html>
