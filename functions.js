@@ -126,7 +126,7 @@ function findImages(passedLink) {
 	$.getJSON(urlPath, function(fbResults) {
 		var theDiv = document.getElementById('images');
 		var infoDiv = document.getElementById('resultInfo');
-		infoDiv.innerHTML="<div style=\"color:white;\"><h5>"+fbResults.collection.metadata.total_hits+" Images Found</h5></div>";
+		infoDiv.innerHTML="<div style=\"color:white;\"><h5>"+fbResults.collection.metadata.total_hits+" Images Found. Click on an image to view more information.</h5></div>";
 		/*LOOP THROUGH ITEMS*/
 
 		for( i = 0; i < fbResults.collection.items.length; i++){
