@@ -18,6 +18,10 @@ function func1() {
   }
 }
 
+$("#searchForm").submit(function(e) {
+    e.preventDefault();
+});
+
 
 /*Change advanced button text*/
 function func2() {
