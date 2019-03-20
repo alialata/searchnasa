@@ -219,6 +219,7 @@ function findImages(passedLink) {
 		noImageFound(fbResults.collection.items.length);
 		gridCorrection(1);
 	});
+	return false;
 }
 
 //Returns "No Images Found" if no images found
