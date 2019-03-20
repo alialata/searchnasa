@@ -18,6 +18,7 @@ function func1() {
   }
 }
 
+
 /*Change advanced button text*/
 function func2() {
   var x = document.getElementById("adv_button");
@@ -241,7 +242,6 @@ function findImages(passedLink) {
 		noImageFound(fbResults.collection.items.length);
 		gridCorrection(1);
 	});
-	return false;
 }
 
 //Returns "No Images Found" if no images found
