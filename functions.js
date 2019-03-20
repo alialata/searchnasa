@@ -184,6 +184,10 @@ function findURL(passedLink){
 
 //Returns/finds the images 
 function findImages(passedLink) {
+
+	$("#searchForm").submit(function(e) {
+	    e.preventDefault();
+	});
 	gridCorrection(0);
 	document.getElementById('images').innerHTML = "";
 	$('#loader').show();
