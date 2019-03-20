@@ -42,6 +42,7 @@ function histBtnToggle(){
   }
 }
 
+//Makes a deque object
 function Deque(){
 	this.stac=new Array();
 	this.popback=function(){
@@ -58,29 +59,59 @@ function Deque(){
 	}
 }
 
-var search_history = new Deque();
-
+//Makes the history table if there isn't one or updates its values based on last 
+//search query. Table will show last 5 search queries.
 function updateHistory(search_field, location, center, nasa_id, photographer, start, end){
-	var elt = "> query: " + returnEmpty(search_field) + ", location: " + returnEmpty(location) + ", center: " + returnEmpty(center) 
-		+ ", nasa_id: " + returnEmpty(nasa_id) + ", photographer: " + returnEmpty(photographer)
-		+ ", start year: " + start + ", end year: " + end;
-	if(search_history.stac.length == 6 ){
-		search_history.pushfront(elt);
-		search_history.popback();
+	var theDiv = document.getElementById('historyTable');
+	if(theDiv == undefined){
+		var histDiv = document.getElementById("history");
+		histDiv.innerHTML = "";
+		let tableObj = document.createElement('TABLE');
+		tableObj.setAttribute("id","historyTable");
+		tableObj.setAttribute("class", "histTable");
+		var header = tableObj.createTHead();
+		var row = header.insertRow(0);
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "Query";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "Location";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "Center";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "NASA ID";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "Photographer";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "Start Year";
+		cell = row.insertCell(row.cells.length);
+		cell.innerHTML = "End Year";
+		histDiv.append(tableObj);
+		var body = tableObj.createTBody();
+		body.setAttribute("id","tbody");
 	}
-	else{
-		search_history.pushfront(elt);
+	var tableObj = document.getElementById('historyTable');
+	if(tableObj.rows.length == 6){
+		tableObj.deleteRow(5);
 	}
-	update_hist_div();
+	var tableBody = document.getElementById('tbody');
+	var row = tableBody.insertRow(0);
+	var cell = row.insertCell(row.cells.length);
+	cell.innerHTML = search_field;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = location;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = center;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = nasa_id;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = photographer;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = start;
+	cell = row.insertCell(row.cells.length);
+	cell.innerHTML = end;
 }
 
-function update_hist_div(){
-	var histDiv = document.getElementById("history");
-	histDiv.innerHTML = "<strong><h3>Search History:<h3><strong>";
-	for(var i = 0; i < search_history.stac.length; i++){
-		histDiv.innerHTML+=search_history.stac[i] + "<br>";
-	}
-}
+
 
 /*IMAGE DATA AND CONTENT WHEN CLICKED*/
 function imageData(theDiv3, fbResults, i){	

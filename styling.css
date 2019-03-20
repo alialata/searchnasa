@@ -174,4 +174,40 @@ a.button1:hover{
 	background: #ff0000; 
 }
 
+.histTable{
+	width: 80%;
+	margin:auto;
+}
+
+.histTable tr:hover {
+background-color: #f2f2f2;
+color: black;
+}
+
+
+.histTable thead td{
+  padding: 6px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+  background-color: #f2f2f2;
+  color: black;
+}
+
+.histTable tbody td{
+  padding: 6px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+.histTable th {
+  padding: 8px;
+  text-align: center;
+  border-bottom: 2px solid #ddd;
+}
+
+
+
+
+
+
 
