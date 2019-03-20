@@ -25,7 +25,7 @@
 					<h2 style="color: white; text-align: center;">NASA SEARCH</h2>
 					</td>
 					<td width="80%" valign="center">
-					<form onsubmit="findImages();return false;">
+					<form id="searchForm" onsubmit="findImages();return false;">
 						<input type="text"  style="width: 80%;margin-bottom: 5px;" id="search_submit" class="" placeholder="what are you looking for?">
 
 						<div id="myDIV" style = "display: none;">
@@ -39,7 +39,7 @@
 						<br>
 						<br>
 						<input type="submit" hidden>
-						<a class="button1" type="button" onclick="findImages();">Search</a>
+						<a class="button1" type="button" onclick="findImages();return false;">Search</a>
 						<a class="button1" type="button" id="adv_button" onclick="func1();func2();">Advanced</a><br>
 					</form>
 					</td>
