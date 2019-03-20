@@ -22,11 +22,64 @@ function func1() {
 /*Change advanced button text*/
 function func2() {
   var x = document.getElementById("adv_button");
-  if (x.innerHTML === "Advanced") {
+  if (x.innerHTML == "Advanced") {
 	x.innerHTML = "Basic";
   } else {
 	x.innerHTML = "Advanced";
   }
+}
+
+
+function histBtnToggle(){
+  var x = document.getElementById("history_button");
+  var hist_div = document.getElementById("history");
+  if (x.innerHTML == "Show History") {
+	hist_div.style.display = "block";
+	x.innerHTML = "Hide History";
+  } else {
+	hist_div.style.display = "none";
+	x.innerHTML = "Show History";
+  }
+}
+
+function Deque(){
+	this.stac=new Array();
+	this.popback=function(){
+		return this.stac.pop();
+	}
+	this.pushback=function(item){
+		this.stac.push(item);
+	}
+	this.popfront=function(){
+		return this.stac.shift();
+	}
+	this.pushfront=function(item){
+		this.stac.unshift(item);
+	}
+}
+
+var search_history = new Deque();
+
+function updateHistory(search_field, location, center, nasa_id, photographer, start, end){
+	var elt = "> query: " + returnEmpty(search_field) + ", location: " + returnEmpty(location) + ", center: " + returnEmpty(center) 
+		+ ", nasa_id: " + returnEmpty(nasa_id) + ", photographer: " + returnEmpty(photographer)
+		+ ", start year: " + start + ", end year: " + end;
+	if(search_history.stac.length == 6 ){
+		search_history.pushfront(elt);
+		search_history.popback();
+	}
+	else{
+		search_history.pushfront(elt);
+	}
+	update_hist_div();
+}
+
+function update_hist_div(){
+	var histDiv = document.getElementById("history");
+	histDiv.innerHTML = "<strong><h3>Search History:<h3><strong>";
+	for(var i = 0; i < search_history.stac.length; i++){
+		histDiv.innerHTML+=search_history.stac[i] + "<br>";
+	}
 }
 
 /*IMAGE DATA AND CONTENT WHEN CLICKED*/
@@ -71,6 +124,14 @@ function checkUndefined(passedString){
 		return passedString;
 }
 
+function returnEmpty(passedString){
+	if(passedString == undefined){
+		return " ";
+	}
+	else 
+		return passedString;
+}
+
 // makes the download links/buttons for each picture
 function makeButton(imgLink, num, targetID, itemNumber){
 	num +=1;
@@ -96,7 +157,7 @@ function findURL(passedLink){
 		urlPath = passedLink;
 	}
 	else{
-		urlPath = "https://images-api.nasa.gov/search?q=" + $('#search_submit').val();
+		var search_field = $('#search_submit').val();
 		var center = $('#center').val();
 		var nasa_id = $('#nasa_id').val();
 		var photographer = $('#photographer').val();
@@ -109,8 +170,10 @@ function findURL(passedLink){
 		if(!end){
 			end = 2019;
 		}
+		urlPath = "https://images-api.nasa.gov/search?q=" + search_field;
 		urlPath = urlPath + "&location="+ location + "&year_start="+ start + "&year_end="+ end
 				+"&center=" + center +"&nasa_id=" + nasa_id +"&photographer=" + photographer;
+		updateHistory(search_field, location, center, nasa_id, photographer, start, end);
 	}
 	return urlPath+"&media_type=image";
 }
@@ -126,7 +189,7 @@ function findImages(passedLink) {
 	$.getJSON(urlPath, function(fbResults) {
 		var theDiv = document.getElementById('images');
 		var infoDiv = document.getElementById('resultInfo');
-		infoDiv.innerHTML="<div style=\"color:white;\"><h5>"+fbResults.collection.metadata.total_hits+" Images Found. Click on an image to view more information.</h5></div>";
+		infoDiv.innerHTML="<div style=\"color:white;\"><h5>"+fbResults.collection.metadata.total_hits+" Images found. Click on an image to view more information.</h5></div>";
 		/*LOOP THROUGH ITEMS*/
 
 		for( i = 0; i < fbResults.collection.items.length; i++){
