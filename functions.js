@@ -29,7 +29,7 @@ function func2() {
   }
 }
 
-
+//changes history button text and shows/hides search history table
 function histBtnToggle(){
   var x = document.getElementById("history_button");
   var hist_div = document.getElementById("history");
@@ -63,7 +63,7 @@ function Deque(){
 //search query. Table will show last 5 search queries.
 function updateHistory(search_field, location, center, nasa_id, photographer, start, end){
 	var theDiv = document.getElementById('historyTable');
-	if(theDiv == undefined){
+	if(theDiv == undefined){ //history table not found
 		var histDiv = document.getElementById("history");
 		histDiv.innerHTML = "";
 		let tableObj = document.createElement('TABLE');
@@ -140,6 +140,7 @@ function imageData(theDiv3, fbResults, i){
 	var imageJsonUrl = fbResults.collection.items[i].href + "";
 	$.getJSON(imageJsonUrl, function(imageLinks) {
 		for(t = 0; t < imageLinks.length-1; t++){
+			//making link buttons for all sizes available of the image
 			makeButton(imageLinks[t], t, theDiv3, i);
 		} 
 	});
@@ -147,6 +148,7 @@ function imageData(theDiv3, fbResults, i){
 	theDiv3.innerHTML+="</div>";	
 }
 
+//Checks for undefined, if undefined, returns Unknown
 function checkUndefined(passedString){
 	if(passedString == undefined){
 		return "Unknown";
@@ -155,15 +157,9 @@ function checkUndefined(passedString){
 		return passedString;
 }
 
-function returnEmpty(passedString){
-	if(passedString == undefined){
-		return " ";
-	}
-	else 
-		return passedString;
-}
 
-// makes the download links/buttons for each picture
+
+//Makes the download link/button for each picture
 function makeButton(imgLink, num, targetID, itemNumber){
 	num +=1;
 	var targetDiv = document.getElementById(targetID.id);
@@ -184,10 +180,10 @@ function makeButton(imgLink, num, targetID, itemNumber){
 /*finds the url from the fields filled out*/
 function findURL(passedLink){
 	var urlPath;
-	if(passedLink){
+	if(passedLink){ //User presses previous or next button
 		urlPath = passedLink;
 	}
-	else{
+	else{ //User searches with provided fields
 		var search_field = $('#search_submit').val();
 		var center = $('#center').val();
 		var nasa_id = $('#nasa_id').val();
@@ -206,7 +202,7 @@ function findURL(passedLink){
 				+"&center=" + center +"&nasa_id=" + nasa_id +"&photographer=" + photographer;
 		updateHistory(search_field, location, center, nasa_id, photographer, start, end);
 	}
-	return urlPath+"&media_type=image";
+	return urlPath+"&media_type=image"; //return entire url
 }
 
 //Returns/finds the images 
@@ -214,7 +210,7 @@ function findImages(passedLink) {
 	gridCorrection(0);
 	document.getElementById('images').innerHTML = "";
 	$('#loader').show();
-	var urlPath = findURL(passedLink);
+	var urlPath = findURL(passedLink); //construct to url to query api
 	console.log(urlPath);
 
 	$.getJSON(urlPath, function(fbResults) {
@@ -222,7 +218,6 @@ function findImages(passedLink) {
 		var infoDiv = document.getElementById('resultInfo');
 		infoDiv.innerHTML="<div style=\"color:white;\"><h5>"+fbResults.collection.metadata.total_hits+" Images found. Click on an image to view more information.</h5></div>";
 		/*LOOP THROUGH ITEMS*/
-
 		for( i = 0; i < fbResults.collection.items.length; i++){
 			var model_num = "#openModal" + i;
 			var content_num = "#content" + i;
@@ -237,10 +232,10 @@ function findImages(passedLink) {
 				theDiv2.innerHTML+="</div>";
 			}
 		}
-		$('#loader').hide();
-		navigateBtns(fbResults);
-		noImageFound(fbResults.collection.items.length);
-		gridCorrection(1);
+		$('#loader').hide();//Hide loading icon
+		navigateBtns(fbResults);//load the prev/next buttons
+		noImageFound(fbResults.collection.items.length);//No image found text
+		gridCorrection(1);//Correct grid
 	});
 }
 
@@ -248,30 +243,30 @@ function findImages(passedLink) {
 function noImageFound(numOfImages){
 	if(numOfImages == 0){
 		var theDiv = document.getElementById('images');
-		theDiv.innerHTML += "<h2 style=\"text-align:center; color: white;\">No Images Found!</h2>";
+		theDiv.innerHTML += "<h2 style=\"text-align:center; color: red;\">No Images Found!</h2>";
 	}
 }
 
-//Corrects masonry
+//Corrects masonry grid
 function gridCorrection(x){
 	if(x==1){
 		var $grid = $('.grid').imagesLoaded( function() {
 			var $container = $('.grid');
 			$container.masonry({
 			  itemSelector: '.grid-item',
-			  fitWidth: true,
-			  gutter: 20
+			  gutter: 10
 			});
-		});
+		});	
+
 	}
 	else if(x == 0){
 		$('.grid').masonry({
 		  itemSelector: '.grid-item',
-		  fitWidth: true,
-		  gutter: 20
+		  gutter: 10
 		});
 		$('.grid').masonry('destroy');
-	}
+
+	}	
 }
 
 //Makes the the previous and next buttons
