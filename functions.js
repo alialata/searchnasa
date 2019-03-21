@@ -5,15 +5,15 @@ function func1() {
   if (x.style.display == "none") {
 	$('#yearStart').val("");
 	$('#yearEnd').val("");
-	$('#location').val("");
-	$('#center').val("");
-	$('#photographer').val("");
-	$('#nasa_id').val("");
+
 	x.style.display = "block";
   }  else {
 	$('#yearStart').val(1920);
 	$('#yearEnd').val(2019);
 	$('#location').val("");
+	$('#center').val("");
+	$('#photographer').val("");
+	$('#nasa_id').val("");
 	x.style.display = "none";
   }
 }
